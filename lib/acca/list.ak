@@ -904,7 +904,7 @@ test resolve_3() {
 /// Like [`foldl`](#foldl), but also provides the position (0-based) of the elements when iterating.
 ///
 /// ```aiken
-/// let group = fn(i, xs, x) { [(i, x), ..xs] }
+/// let group = fn(i, x, xs) { [(i, x), ..xs] }
 /// list.indexed_foldl(["a", "b", "c"], [], group) == [
 ///   (2, "c"),
 ///   (1, "b"),
@@ -914,7 +914,7 @@ test resolve_3() {
 pub fn indexed_foldl(
   self: List<a>,
   zero: result,
-  with: fn(Int, result, a) -> result,
+  with: fn(Int, a, result) -> result,
 ) -> result {
   do_indexed_foldl(0, self, zero, with)
 }
@@ -923,23 +923,62 @@ fn do_indexed_foldl(
   n: Int,
   self: List<a>,
   zero: result,
-  with: fn(Int, result, a) -> result,
+  with: fn(Int, a, result) -> result,
 ) -> result {
   when self is {
     [] -> zero
-    [x, ..xs] -> do_indexed_foldl(n + 1, xs, with(n, zero, x), with)
+    [x, ..xs] -> do_indexed_foldl(n + 1, xs, with(n, x, zero), with)
   }
 }
 
 test indexed_foldl_1() {
-  indexed_foldl([], 0, fn(i, xs, x) { i + x + xs }) == 0
+  indexed_foldl([], 0, fn(i, x, xs) { i + x + xs }) == 0
 }
 
 test indexed_foldl_2() {
   let letters = ["a", "b", "c"]
-  indexed_foldl(letters, [], fn(i, xs, x) { [(i, x), ..xs] }) == [
+  indexed_foldl(letters, [], fn(i, x, xs) { [(i, x), ..xs] }) == [
     (2, "c"), (1, "b"), (0, "a"),
   ]
+}
+
+/// Like [`reduce`](#reduce), but also provides the position (0-based) of the elements when iterating.
+/// ```aiken
+/// let group = fn(i, xs, x) { [(i, x), ..xs] }
+/// list.indexed_reduce(["a", "b", "c"], [], group) == [
+///   (2, "c"),
+///   (1, "b"),
+///   (0, "a")
+/// ]
+/// ```
+pub fn indexed_reduce(
+  self: List<a>,
+  zero: result,
+  with: fn(Int, result, a) -> result,
+) -> result {
+  indexed_foldl(self, zero, fn(i, a, result) { with(i, result, a) })
+}
+
+test indexed_reduce_1() {
+  indexed_reduce([], 0, fn(i, total, n) { i + n + total }) == 0
+}
+
+test indexed_reduce_2() {
+  indexed_reduce([5, 5, 5], 0, fn(i, total, n) { i * 100 + n + total }) == 315
+}
+
+test indexed_reduce_3() {
+  indexed_reduce(
+    [True, False, True],
+    True,
+    fn(i, result, condition) {
+      if i % 2 == 0 {
+        condition && result
+      } else {
+        result
+      }
+    },
+  ) == True
 }
 
 /// Returns whether all elements satisfy a given predicate with index.
@@ -1106,7 +1145,7 @@ pub fn indexed_find(self: List<a>, predicate: fn(Int, a) -> Bool) -> Option<a> {
   do_indexed_find(self, predicate, 0)
 }
 
-pub fn do_indexed_find(
+fn do_indexed_find(
   self: List<a>,
   predicate: fn(Int, a) -> Bool,
   index: Int,
