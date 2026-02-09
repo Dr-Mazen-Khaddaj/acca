@@ -60,8 +60,7 @@ test force_head_1() {
 pub fn force_tail(self: List<a>) -> List<a> {
   when list.tail(self) is {
     Some(item) -> item
-    None ->
-      []
+    None -> []
   }
 }
 
@@ -91,8 +90,7 @@ pub fn reduce_left(self: List<a>, with: fn(b, a) -> b, zero: b) -> b {
 }
 
 test reduce_left_1() {
-  let chars =
-    []
+  let chars = []
 
   let zero = @"0"
 
@@ -103,8 +101,7 @@ test reduce_left_1() {
 }
 
 test reduce_left_2() {
-  let chars =
-    [@"a", @"b", @"c", @"d"]
+  let chars = [@"a", @"b", @"c", @"d"]
 
   let zero = @"0"
 
@@ -133,8 +130,7 @@ pub fn reduce_right(self: List<a>, with: fn(b, a) -> b, zero: b) -> b {
 }
 
 test reduce_right_1() {
-  let chars =
-    []
+  let chars = []
 
   let zero = @"0"
 
@@ -145,8 +141,7 @@ test reduce_right_1() {
 }
 
 test reduce_right_2() {
-  let chars =
-    [@"a", @"b", @"c", @"d"]
+  let chars = [@"a", @"b", @"c", @"d"]
 
   let zero = @"0"
 
@@ -514,8 +509,7 @@ test sliding_8() {
 /// ```
 pub fn indices(self: List<a>) -> List<Int> {
   when self is {
-    [] ->
-      []
+    [] -> []
     _ -> {
       let len = list.length(self)
       list.range(0, len - 1)
@@ -728,21 +722,9 @@ test combinations_2() {
 }
 
 test combinations_3() {
-  combinations([1,
-      2,
-      3,
-      4,
-      5], 3) == [
-    [1, 2, 3],
-    [1, 2, 4],
-    [1, 2, 5],
-    [1, 3, 4],
-    [1, 3, 5],
-    [1, 4, 5],
-    [2, 3, 4],
-    [2, 3, 5],
-    [2, 4, 5],
-    [3, 4, 5],
+  combinations([1, 2, 3, 4, 5], 3) == [
+    [1, 2, 3], [1, 2, 4], [1, 2, 5], [1, 3, 4], [1, 3, 5], [1, 4, 5], [2, 3, 4],
+    [2, 3, 5], [2, 4, 5], [3, 4, 5],
   ]
 }
 
@@ -775,28 +757,17 @@ test permutations_0() {
 }
 
 test permutations_1() {
-  let items =
-    [1, 2, 3]
+  let items = [1, 2, 3]
   permutations(items) == [
-    [1, 2, 3],
-    [1, 3, 2],
-    [2, 1, 3],
-    [2, 3, 1],
-    [3, 1, 2],
-    [3, 2, 1],
+    [1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1],
   ]
 }
 
 test permutations_2() {
-  let items =
-    ["a", "b", "c"]
+  let items = ["a", "b", "c"]
   permutations(items) == [
-    ["a", "b", "c"],
-    ["a", "c", "b"],
-    ["b", "a", "c"],
-    ["b", "c", "a"],
-    ["c", "a", "b"],
-    ["c", "b", "a"],
+    ["a", "b", "c"], ["a", "c", "b"], ["b", "a", "c"], ["b", "c", "a"],
+    ["c", "a", "b"], ["c", "b", "a"],
   ]
 }
 
@@ -834,8 +805,7 @@ test count_by_0() {
 }
 
 test count_by_1() {
-  let items =
-    [#"ffff", #"ffff", #"00", #"00", #"00"]
+  let items = [#"ffff", #"ffff", #"00", #"00", #"00"]
 
   let result =
     dict.new()
@@ -846,8 +816,7 @@ test count_by_1() {
 }
 
 test count_by_2() {
-  let items =
-    [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
+  let items = [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
 
   let result =
     dict.new()
@@ -867,8 +836,7 @@ test count_0() {
 }
 
 test count_1() {
-  let items =
-    [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
+  let items = [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
 
   let result =
     dict.new()
@@ -889,22 +857,19 @@ pub fn flatten(self: List<Option<a>>) -> List<a> {
 }
 
 test flatten_1() {
-  let items: List<Option<Int>> =
-    [Some(1), None, Some(2)]
+  let items: List<Option<Int>> = [Some(1), None, Some(2)]
 
   flatten(items) == [1, 2]
 }
 
 test flatten_2() {
-  let items: List<Option<Int>> =
-    [None]
+  let items: List<Option<Int>> = [None]
 
   flatten(items) == []
 }
 
 test flatten_3() {
-  let items: List<Option<Int>> =
-    []
+  let items: List<Option<Int>> = []
 
   flatten(items) == []
 }
@@ -919,24 +884,309 @@ pub fn resolve(self: List<Option<a>>) -> List<Option<a>> {
 }
 
 test resolve_1() {
-  let items: List<Option<Int>> =
-    [Some(1), None, Some(2)]
+  let items: List<Option<Int>> = [Some(1), None, Some(2)]
 
   resolve(items) == [Some(1), Some(2)]
 }
 
 test resolve_2() {
-  let items: List<Option<Int>> =
-    [None]
+  let items: List<Option<Int>> = [None]
 
   resolve(items) == []
 }
 
 test resolve_3() {
-  let items: List<Option<Int>> =
-    []
+  let items: List<Option<Int>> = []
 
   resolve(items) == []
+}
+
+/// Like [`foldl`](#foldl), but also provides the position (0-based) of the elements when iterating.
+///
+/// ```aiken
+/// let group = fn(i, x, xs) { [(i, x), ..xs] }
+/// list.indexed_foldl(["a", "b", "c"], [], group) == [
+///   (2, "c"),
+///   (1, "b"),
+///   (0, "a")
+/// ]
+/// ```
+pub fn indexed_foldl(
+  self: List<a>,
+  zero: result,
+  with: fn(Int, a, result) -> result,
+) -> result {
+  do_indexed_foldl(0, self, zero, with)
+}
+
+fn do_indexed_foldl(
+  n: Int,
+  self: List<a>,
+  zero: result,
+  with: fn(Int, a, result) -> result,
+) -> result {
+  when self is {
+    [] -> zero
+    [x, ..xs] -> do_indexed_foldl(n + 1, xs, with(n, x, zero), with)
+  }
+}
+
+test indexed_foldl_1() {
+  indexed_foldl([], 0, fn(i, x, xs) { i + x + xs }) == 0
+}
+
+test indexed_foldl_2() {
+  let letters = ["a", "b", "c"]
+  indexed_foldl(letters, [], fn(i, x, xs) { [(i, x), ..xs] }) == [
+    (2, "c"), (1, "b"), (0, "a"),
+  ]
+}
+
+/// Like [`reduce`](#reduce), but also provides the position (0-based) of the elements when iterating.
+/// ```aiken
+/// let group = fn(i, xs, x) { [(i, x), ..xs] }
+/// list.indexed_reduce(["a", "b", "c"], [], group) == [
+///   (2, "c"),
+///   (1, "b"),
+///   (0, "a")
+/// ]
+/// ```
+pub fn indexed_reduce(
+  self: List<a>,
+  zero: result,
+  with: fn(Int, result, a) -> result,
+) -> result {
+  indexed_foldl(self, zero, fn(i, a, result) { with(i, result, a) })
+}
+
+test indexed_reduce_1() {
+  indexed_reduce([], 0, fn(i, total, n) { i + n + total }) == 0
+}
+
+test indexed_reduce_2() {
+  indexed_reduce([5, 5, 5], 0, fn(i, total, n) { i * 100 + n + total }) == 315
+}
+
+test indexed_reduce_3() {
+  indexed_reduce(
+    [True, False, True],
+    True,
+    fn(i, result, condition) {
+      if i % 2 == 0 {
+        condition && result
+      } else {
+        result
+      }
+    },
+  ) == True
+}
+
+/// Returns whether all elements satisfy a given predicate with index.
+/// ```aiken
+/// alist.indexed_all([10, 20, 30], fn(index, element) { element == (index + 1) * 10 }) == True
+/// alist.indexed_all([10, 20, 25], fn(index, element) { element == (index + 1) * 10 }) == False
+/// ```
+pub fn indexed_all(self: List<a>, predicate: fn(Int, a) -> Bool) -> Bool {
+  list.indexed_foldr(
+    self,
+    True,
+    fn(index: Int, element: a, acc: Bool) -> Bool {
+      predicate(index, element) && acc
+    },
+  )
+}
+
+test indexed_all_1() {
+  indexed_all(
+    [10, 20, 30],
+    fn(index, element) { element == ( index + 1 ) * 10 },
+  ) == True
+}
+
+test indexed_all_2() {
+  indexed_all(
+    [10, 20, 25],
+    fn(index, element) { element == ( index + 1 ) * 10 },
+  ) == False
+}
+
+test indexed_all_3() {
+  indexed_all([], fn(_index, _element) { False }) == True
+}
+
+/// Returns whether any element satisfies a given predicate with index.
+/// ```aiken
+/// alist.indexed_any([10, 20, 30], fn(index, element) { element == 20 }) == True
+/// alist.indexed_any([10, 30, 40], fn(index, element) { element == 20 }) == False
+/// ```
+pub fn indexed_any(self: List<a>, predicate: fn(Int, a) -> Bool) -> Bool {
+  list.indexed_foldr(
+    self,
+    False,
+    fn(index: Int, element: a, acc: Bool) -> Bool {
+      predicate(index, element) || acc
+    },
+  )
+}
+
+test indexed_any_1() {
+  indexed_any([2, 2, 2], fn(index, element) { element == index }) == True
+}
+
+test indexed_any_2() {
+  indexed_any([3, 3, 3], fn(index, element) { element == index }) == False
+}
+
+test indexed_any_3() {
+  indexed_any([], fn(_index, _element) { True }) == False
+}
+
+/// Filters elements given a predicate with index.
+/// ```aiken
+/// alist.indexed_filter([10, 20, 30, 40], fn(index, element) { index % 2 == 0 }) == [10, 30]
+/// ```
+pub fn indexed_filter(self: List<a>, predicate: fn(Int, a) -> Bool) -> List<a> {
+  list.indexed_foldr(
+    self,
+    [],
+    fn(index: Int, element: a, acc: List<a>) -> List<a> {
+      if predicate(index, element) {
+        [element, ..acc]
+      } else {
+        acc
+      }
+    },
+  )
+}
+
+test indexed_filter_1() {
+  indexed_filter([5, 4, 3, 2, 1, 0], fn(index, element) { element > index }) == [
+    5, 4, 3,
+  ]
+}
+
+test indexed_filter_2() {
+  indexed_filter([5, 4, 3, 2, 1, 0], fn(index, element) { element <= index }) == [
+    2, 1, 0,
+  ]
+}
+
+test indexed_filter_3() {
+  indexed_filter([], fn(_index, _element) { True }) == []
+}
+
+test indexed_filter_4() {
+  indexed_filter(
+    [10, 20, 30, 40, 50, 60],
+    fn(index, _element) { index % 2 == 0 },
+  ) == [10, 30, 50]
+}
+
+/// Partitions elements based on a predicate with index.
+/// ```aiken
+/// alist.indexed_partition([10, 15, 30, 35, 50], fn(index, element) { element / 10 == index + 1 }) == ([10, 30, 50], [15, 35])
+/// ```
+pub fn indexed_partition(
+  self: List<a>,
+  predicate: fn(Int, a) -> Bool,
+) -> (List<a>, List<a>) {
+  list.indexed_foldr(
+    self,
+    ([], []),
+    fn(index: Int, element: a, (left, right): (List<a>, List<a>)) -> (
+      List<a>,
+      List<a>,
+    ) {
+      if predicate(index, element) {
+        ([element, ..left], right)
+      } else {
+        (left, [element, ..right])
+      }
+    },
+  )
+}
+
+test indexed_partition_1() {
+  let (left, right) =
+    indexed_partition(
+      [10, 15, 30, 35, 50],
+      fn(index, element) { element / 10 == index + 1 },
+    )
+
+  left == [10, 30, 50] && right == [15, 35]
+}
+
+test indexed_partition_2() {
+  let (left, right) =
+    indexed_partition(
+      [5, 10, 15, 20],
+      fn(index, element) { element / 5 == index + 1 },
+    )
+
+  left == [5, 10, 15, 20] && right == []
+}
+
+test indexed_partition_3() {
+  let (left, right) =
+    indexed_partition(
+      [6, 12, 18, 24],
+      fn(index, element) { element / 6 == index },
+    )
+
+  left == [] && right == [6, 12, 18, 24]
+}
+
+/// Finds first element matching a given predicate with index.
+/// ```aiken
+/// alist.indexed_find([10, 20, 30, 40], fn(index, element) { element * index == 60 }) == Some(30)
+/// alist.indexed_find([10, 20, 30, 40], fn(index, element) { element * index == 50 }) == None
+/// ```
+pub fn indexed_find(self: List<a>, predicate: fn(Int, a) -> Bool) -> Option<a> {
+  do_indexed_find(self, predicate, 0)
+}
+
+fn do_indexed_find(
+  self: List<a>,
+  predicate: fn(Int, a) -> Bool,
+  index: Int,
+) -> Option<a> {
+  when self is {
+    [] -> None
+    [x, ..xs] ->
+      if predicate(index, x) {
+        Some(x)
+      } else {
+        do_indexed_find(xs, predicate, index + 1)
+      }
+  }
+}
+
+test indexed_find_1() {
+  let sth =
+    indexed_find([10, 20, 30, 40], fn(index, element) { element * index == 60 })
+  expect Some(s) = sth
+
+  s == 30
+}
+
+test indexed_find_2() {
+  let sth =
+    indexed_find([10, 20, 30, 40], fn(index, element) { element * index == 50 })
+
+  sth == None
+}
+
+test indexed_find_3() {
+  let sth = indexed_find([], fn(_index, _element) { True })
+
+  sth == None
+}
+
+test indexed_find_4() {
+  let sth = indexed_find([5], fn(index, element) { index == 0 && element == 5 })
+  expect Some(s) = sth
+
+  s == 5
 }
 // TODO
 // @ List(1, 2, 3, 4).groupBy(x  => x> 2)
